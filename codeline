@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kristine's Birthday Countdown</title>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #f0e5e5;
+    }
+
+    .birthdayimg {
+      background-image: url('https://wallpaperaccess.com/full/9199103.jpg');
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: red;
+    }
+
+    .middle {
+      text-align: center;
+      color: white;
+    }
+
+    .countdown {
+      font-size: 40px;
+      margin-top: 30px;
+      color: red;
+    }
+
+    .loading-bar {
+      width: 100%;
+      height: 30px;
+      margin: 20px 0;
+      position: relative;
+      display: none;
+      border-radius: 15px;
+      overflow: hidden;
+      background: #ddd;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0;
+      animation: fill 13s linear forwards;
+      background: repeating-linear-gradient(
+        135deg,
+        #ff0000,
+        #ff0000 10px,
+        #ffffff 10px,
+        #ffffff 20px
+      );
+      border-radius: 15px;
+    }
+
+    @keyframes fill {
+      from {
+        width: 0;
+      }
+      to {
+        width: 100%;
+      }
+    }
+
+    /* Confetti styles */
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      animation: confetti-fall 5s infinite ease-in-out;
+      border-radius: 50%;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: pink;
+      clip-path: polygon(50% 0%, 0% 40%, 50% 100%, 100% 40%);
+      animation: heart-fall 7s infinite ease-in-out;
+    }
+
+    @keyframes confetti-fall {
+      0% {
+        top: -10%;
+        opacity: 1;
+      }
+      100% {
+        top: 110%;
+        opacity: 0;
+      }
+    }
+
+    @keyframes heart-fall {
+      0% {
+        top: -10%;
+        opacity: 1;
+      }
+      100% {
+        top: 110%;
+        opacity: 0;
+      }
+    }
+
+    /* Happy Birthday Text Style */
+    #amx {
+      font-size: 60px;
+      color: white;
+      text-shadow: 2px 2px red;
+    }
+
+    #happy-birthday {
+      display: none;
+      font-size: 80px;
+      color: white;
+      text-shadow: -2px -2px 0 red, 2px -2px 0 red, -2px 2px 0 red, 2px 2px 0 red;
+    }
+  </style>
+</head>
+<body>
+  <audio id="bgm" src="https://freemusicarchive.org/music/serge-quadrado/happy-birthday-to-you-instrumentals/happy-birthday-to-you-lullaby/" autoplay loop></audio>
+
+  <div class="birthdayimg">
+    <div class="middle">
+      <h1>🌸.•♫•♬• Morning Krispiee! •♬•♫•.🌸</h1>
+      <hr>
+      <p id="amx" class="countdown"></p>
+      <h1 id="happy-birthday">HAPPY BIRTHDAY KRISTINE!!</h1>
+      <div class="loading-bar">
+        <div class="progress" id="progressBar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confetti and hearts -->
+  <div class="confetti"></div>
+  <div class="heart"></div>
+
+  <script>
+    var countDownDate = new Date().getTime() + 5000; // Set countdown to 5 seconds from now
+
+    var countdownfunction = setInterval(function() {
+      var now = new Date().getTime();
+      var distance = countDownDate - now;
+
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("amx").innerHTML = seconds + "S ";
+
+      if (distance < 0) {
+        clearInterval(countdownfunction);
+        document.getElementById("amx").innerHTML = "";
+        document.getElementById("happy-birthday").style.display = "block";
+        document.querySelector('.loading-bar').style.display = 'flex';
+
+        setTimeout(function() {
+          window.location = "https://youtu.be/COXkTIgj6Ek?si=7AOzRz2aCdSZrfag";
+        }, 13000);
+      }
+    }, 1000);
+
+    // Create confetti and heart animations
+    function createConfetti() {
+      const confetti = document.createElement("div");
+      confetti.classList.add("confetti");
+      confetti.style.left = Math.random() * window.innerWidth + "px";
+      document.body.appendChild(confetti);
+
+      setTimeout(() => confetti.remove(), 5000);
+    }
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 7000);
+    }
+
+    setInterval(createConfetti, 300);
+    setInterval(createHeart, 600);
+  </script>
+</body>
+</html>
